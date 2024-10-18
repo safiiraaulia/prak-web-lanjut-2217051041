@@ -31,3 +31,9 @@ Route::post('/user/store', [UserController::class, 'store'])->name('user.store')
 Route::get('/user', [UserController::class, 'create']);
 
 Route::get('/user', [UserController::class, 'index']);
+
+Route::get('/user/list', [UserController::class, 'index'])->name('user.list');
+
+Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
+
+Route::get('/user/{id}', [UserController::class,'update'])->name('user.update');

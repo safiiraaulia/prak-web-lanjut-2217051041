@@ -40,6 +40,7 @@
             border-radius: 50%;
             overflow: hidden;
             border: 4px solid #ff99cc; /* Border pink */
+            margin-bottom: 20px; /* Jarak bawah untuk foto */
         }
 
         .img-bx img {
@@ -48,24 +49,25 @@
             object-fit: cover;
         }
 
-        .content {
-            margin-top: 20px;
-        }
-
-        h2 {
-            font-size: 20px;
+        h1 {
+            font-size: 24px;
             color: #ff66b2; /* Warna teks pink */
-            margin: 10px 0 5px;
+            margin: 10px 0;
         }
 
-        h2 span {
-            display: block;
+        .info {
+            margin: 10px 0; /* Jarak antar elemen info */
+        }
+
+        .label {
             font-size: 14px;
-            color: #999;
+            font-weight: bold;
+            color: #ff66b2; /* Warna label */
         }
 
-        .detail {
-            margin-top: 10px;
+        .value {
+            font-size: 16px;
+            color: #555; /* Warna teks nilai */
         }
     </style>
 
@@ -74,18 +76,25 @@
 </head>
 
 <body>
-
     <div class="card">
         <div class="img-bx">
-            <img src="https://cdn.idntimes.com/content-images/post/20240318/dphoto-shared-by-on-february-07-2024-tagging-at-boucheron-may-be-an-image-of-1-person-hair-top-and-text-8d8835275adc240963406ddee1a65a90_600x400.jpg" alt="Image description" />
+            <img src="../{{ $user->foto }}" alt="Avatar">
         </div>
-        <div class="content">
-            <div class="detail">
-                <h2><?= $nama ?><br /><span><?= $npm ?></span><br /><span><?= $nama_kelas ?? 'Kelas tidak ditemukan' ?></span></h2>
-            </div>
+        <h1>Profil User</h1>
+
+        <div class="info">
+            <p class="label">Nama:</p>
+            <p class="value">{{ $user->nama }}</p>
+        </div>
+        <div class="info">
+            <p class="label">NPM:</p>
+            <p class="value">{{ $user->npm }}</p>
+        </div>
+        <div class="info">
+            <p class="label">Kelas:</p>
+            <p class="value">{{ $user->nama_kelas ?? 'Kelas Tidak Ditemukan' }}</p>
         </div>
     </div>
-
 </body>
 
 </html>

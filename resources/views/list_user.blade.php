@@ -24,7 +24,9 @@
                 <td>{{ $user['nama'] }}</td>
                 <td>{{ $user['npm'] }}</td>
                 <td>{{ $user['nama_kelas'] }}</td>
-                <td></td>
+                <td>
+                    <a href="{{ route('user.show', $user['id']) }}" class="btn btn-info btn-sm">Detail</a>
+                </td>
             </tr>
             @endforeach
         </tbody>
