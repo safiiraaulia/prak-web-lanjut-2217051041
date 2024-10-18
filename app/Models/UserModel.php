@@ -12,9 +12,27 @@ class UserModel extends Model
     protected $table = 'user';
     protected $guarded = ['id'];
 
-    public function getUser(){
-        return $this->join('kelas', 'kelas.id', '=', 'user.kelas_id')->select('user.*', 'kelas.nama_kelas as nama_kelas')->get();
+    protected $fillable = [
+        'nama',
+        'npm',
+        'kelas_id',
+        'foto',
+    ];
+
+    public function getUser($id = null)
+    {
+        if ($id != null) {
+            return $this->join('kelas', 'kelas.id', '=', 'user.kelas_id')
+                ->select('user.*', 'kelas.nama_kelas')
+                ->where('user.id', $id)
+                ->first();
+        }
+    
+        return $this->join('kelas', 'kelas.id', '=', 'user.kelas_id')
+            ->select('user.*', 'kelas.nama_kelas as nama_kelas')
+            ->get();
     }
+    
 
 
     public function kelas(){
