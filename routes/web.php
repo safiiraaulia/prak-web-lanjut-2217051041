@@ -36,4 +36,9 @@ Route::get('/user/list', [UserController::class, 'index'])->name('user.list');
 
 Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
 
-Route::get('/user/{id}', [UserController::class,'update'])->name('user.update');
+
+Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit'); 
+
+Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update'); 
+
+Route::post('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete'); 

@@ -95,19 +95,56 @@ public function edit($id)
     return view('edit_user', compact('user', 'kelas', 'title'));
 }
 
-  public function update(Request $request, $id){
+public function update(Request $request, $id)
+{
     $user = UserModel::findOrFail($id);
-
+    
+    // Validasi input
+    $request->validate([
+        'nama' => 'required',
+        'npm' => 'required',
+        'kelas_id' => 'required',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+    ]);
+    
+    // Update user fields
     $user->nama = $request->nama;
-    $user->npm = $equest->npm;
+    $user->npm = $request->npm;
     $user->kelas_id = $request->kelas_id;
-
-    if ($request->hasFile('foto')){
-        $filename = time() . '.' . $request->foto->extension();
-        $user->foto = 'upload/' . $filename;
+    
+    // Handle file upload
+    if ($request->hasFile('foto')) {
+        if ($user->foto && file_exists(public_path($user->foto))) {
+            unlink(public_path($user->foto));
+        }
+        
+        $file = $request->file('foto');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('uploads'), $filename);
+        
+        $user->foto = 'uploads/' . $filename;
     }
+    
     $user->save();
-    return redirect()->route('user.list')->with('success', 'User updated successfully');
-  }
+    
+    // Flash message
+    return redirect()->route('user.list')->with('success', 'User berhasil diupdate');
+}
+
+  
+  public function destroy($id)
+  {
+    $user = UserModel::findOrFail($id);
+    
+    // Menghapus file foto jika ada
+    if ($user->foto && file_exists(public_path($user->foto))) {
+        unlink(public_path($user->foto));
+    }
+
+    // Menghapus user dari database
+    $user->delete();
+
+    return redirect()->route('user.list')->with('success', 'User berhasil dihapus');
+}
 
 }
